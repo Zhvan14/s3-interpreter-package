@@ -3,6 +3,7 @@ import sys
 
 class S3Interpreter:
     _instance = None
+    _initialized = False
 
     def __new__(cls, *args, **kwargs):
         if not cls._instance:
@@ -10,12 +11,11 @@ class S3Interpreter:
         return cls._instance
 
     def __init__(self):
-        # This part will still run every time, but you can add a flag to stop it
-        if not hasattr(self, 'initialized'):
+        if not self._initialized:
             self.variables = {}
             self.functions = {}
             self.last_input = ""
-            self.initialized = True
+            S3Interpreter._initialized = True
     
     # Rest of your methods
     def _evaluate_expression(self, expr_string):
