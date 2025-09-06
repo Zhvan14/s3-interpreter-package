@@ -20,4 +20,4 @@ classifiers = [
 dependencies = []
 
 [project.scripts]
-s3 = "s3_interpreter.__main__:main"
+s3 = "s3.__main__:main"
