@@ -2,11 +2,22 @@ import re
 import sys
 
 class S3Interpreter:
-    def __init__(self):
-        self.variables = {}
-        self.functions = {}
-        self.last_input = ""
+    _instance = None
 
+    def __new__(cls, *args, **kwargs):
+        if not cls._instance:
+            cls._instance = super(S3Interpreter, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
+    def __init__(self):
+        # This part will still run every time, but you can add a flag to stop it
+        if not hasattr(self, 'initialized'):
+            self.variables = {}
+            self.functions = {}
+            self.last_input = ""
+            self.initialized = True
+    
+    # Rest of your methods
     def _evaluate_expression(self, expr_string):
         expr_string = expr_string.strip()
         expr_string = expr_string.replace('((input))', str(self.last_input))
